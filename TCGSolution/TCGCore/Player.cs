@@ -25,6 +25,10 @@ namespace TCGCore
 
         public bool CanPlayHand() => this.Mana >= this.Hand.Min().Value;
 
+        public int ReceiveManaSlot() => this.ManaSlots = Math.Min(this.ManaSlots + 1, 10);
+
+        public int RefillManaSlots() => this.Mana = this.ManaSlots;
+
         public void DrawCard()
         {
             if (this.Deck.Count == 0)
@@ -38,6 +42,14 @@ namespace TCGCore
                 if (this.Hand.Count < 5)
                     this.Hand.Add(card);
             }
+        }
+
+        public override string ToString()
+        {
+            return $"Name : {this.Name}\n" +
+                   $"Health : {this.Health}\n" +
+                   $"Mana : {this.Mana}/{this.ManaSlots}\n" +
+                   $"Hand : {this.Hand}\n";
         }
     }
 }
