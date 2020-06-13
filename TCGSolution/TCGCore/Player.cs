@@ -49,6 +49,8 @@ namespace TCGCore
             }
         }
 
+        
+
         public override string ToString()
         {
             return $"Name : {this.Name}\n" +
