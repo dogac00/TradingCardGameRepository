@@ -1,4 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading;
 
 namespace TCGCore
 {
@@ -14,6 +17,27 @@ namespace TCGCore
         public Player(string name)
         {
             this.Name = name;
+        }
+
+        public int TakeDamage(int damage) => this.Health -= damage;
+
+        public int Heal(int health) => this.Health = Math.Min(this.Health += health, 30);
+
+        public bool CanPlayHand() => this.Mana >= this.Hand.Min().Value;
+
+        public void DrawCard()
+        {
+            if (this.Deck.Count == 0)
+                this.TakeDamage(1);
+            else
+            {
+                var index = new Random().Next(this.Deck.Count);
+                var card = this.Deck[index];
+                this.Deck.RemoveAt(index);
+
+                if (this.Hand.Count < 5)
+                    this.Hand.Add(card);
+            }
         }
     }
 }
