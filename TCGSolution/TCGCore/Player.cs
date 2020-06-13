@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Threading;
 
 namespace TCGCore
@@ -49,14 +50,29 @@ namespace TCGCore
             }
         }
 
-        
+        private string GetHandString()
+        {
+            var sb = new StringBuilder();
+
+            for (int i = 0; i < this.Hand.Count; i++)
+            {
+                if (i != 0)
+                    sb.Append(", ");
+
+                sb.Append(Hand[i].Value);
+            }
+
+            return sb.ToString();
+        }
 
         public override string ToString()
         {
             return $"Name : {this.Name}\n" +
                    $"Health : {this.Health}\n" +
                    $"Mana : {this.Mana}/{this.ManaSlots}\n" +
-                   $"Hand : {this.Hand}\n";
+                   $"Hand : {this.GetHandString()}\n";
         }
+
+        public void DecreaseMana(int selectedCard) => this.Mana -= selectedCard;
     }
 }

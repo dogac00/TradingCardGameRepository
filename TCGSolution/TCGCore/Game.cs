@@ -23,7 +23,13 @@ namespace TCGCore
 
         public void Start()
         {
-            while (this.Winner != null)
+            for (int i = 0; i < 3; i++)
+            {
+                this.ActivePlayer.DrawCard();
+                this.OpponentPlayer.DrawCard();
+            }
+
+            while (this.Winner == null)
             {
                 this.ActivePlayer.ReceiveManaSlot();
                 this.ActivePlayer.RefillManaSlots();
@@ -55,7 +61,7 @@ namespace TCGCore
             return false;
         }
 
-        public void PlayTurn()
+        private void PlayTurn()
         {
             while (ActivePlayer.CanPlayHand())
             {
@@ -91,6 +97,8 @@ namespace TCGCore
                 }
 
                 var isHealing = choice.Contains("H");
+                ActivePlayer.Hand.Remove(selectedCard);
+                ActivePlayer.DecreaseMana(selectedCard);
 
                 if (isHealing)
                 {
