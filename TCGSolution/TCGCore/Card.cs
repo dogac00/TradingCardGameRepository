@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace TradingCardGameCore
+namespace TCGCore
 {
     public class Card : IComparable<Card>
     {
