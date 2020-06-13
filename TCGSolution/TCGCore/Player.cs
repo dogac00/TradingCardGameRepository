@@ -29,10 +29,13 @@ namespace TCGCore
 
         public int RefillManaSlots() => this.Mana = this.ManaSlots;
 
-        public void DrawCard()
+        public Card DrawCard()
         {
             if (this.Deck.Count == 0)
+            {
                 this.TakeDamage(1);
+                return null;
+            }
             else
             {
                 var index = new Random().Next(this.Deck.Count);
@@ -41,6 +44,8 @@ namespace TCGCore
 
                 if (this.Hand.Count < 5)
                     this.Hand.Add(card);
+
+                return card;
             }
         }
 

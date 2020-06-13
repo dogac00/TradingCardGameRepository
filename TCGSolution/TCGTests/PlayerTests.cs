@@ -1,3 +1,4 @@
+using System.Linq;
 using TCGCore;
 using Xunit;
 
@@ -15,7 +16,7 @@ namespace TCGTests
 
             player.TakeDamage(damage);
 
-            Assert.Equal(player.Health, expectedHealth);
+            Assert.Equal(expectedHealth, player.Health);
         }
 
         [Theory]
@@ -28,7 +29,7 @@ namespace TCGTests
 
             player.Heal(heal);
 
-            Assert.Equal(player.Health, expectedHealth);
+            Assert.Equal(expectedHealth, player.Health);
         }
 
         [Theory]
@@ -42,7 +43,55 @@ namespace TCGTests
             player.TakeDamage(damage);
             player.Heal(heal);
 
-            Assert.Equal(player.Health, expectedHealth);
+            Assert.Equal(expectedHealth, player.Health);
+        }
+
+        [Fact]
+        public void ShouldReceiveManaSlot()
+        {
+            var player = new Player("Dogac");
+
+            player.ReceiveManaSlot();
+            player.ReceiveManaSlot();
+            player.ReceiveManaSlot();
+
+            Assert.Equal(3, player.ManaSlots);
+        }
+
+        [Fact]
+        public void ShouldRefillManaSlots()
+        {
+            var player = new Player("Dogac");
+
+            player.ReceiveManaSlot();
+            player.ReceiveManaSlot();
+            player.ReceiveManaSlot();
+            player.ReceiveManaSlot();
+            player.RefillManaSlots();
+
+            Assert.Equal(4, player.Mana);
+        }
+
+        [Fact]
+        public void ShouldPlayHand()
+        {
+            var player = new Player("Dogac");
+
+            player.ReceiveManaSlot();
+            player.ReceiveManaSlot();
+            player.ReceiveManaSlot();
+            player.ReceiveManaSlot();
+            player.RefillManaSlots();
+
+            player.DrawCard();
+            player.DrawCard();
+            player.DrawCard();
+            var min = player.Hand.Min().Value;
+
+            if (min > player.Mana)
+                Assert.False(player.CanPlayHand());
+            else
+                Assert.True(player.CanPlayHand());
         }
     }
 }
