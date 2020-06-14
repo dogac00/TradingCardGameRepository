@@ -101,13 +101,11 @@ namespace TCGCore
                 ActivePlayer.DecreaseMana(selectedCard);
 
                 if (isHealing)
-                {
                     ActivePlayer.Heal(selectedCard);
-                }
                 else
-                {
                     OpponentPlayer.TakeDamage(selectedCard);
-                }
+
+                Console.WriteLine();
             }
         }
 
