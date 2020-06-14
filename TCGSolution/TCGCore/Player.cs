@@ -24,7 +24,7 @@ namespace TCGCore
 
         public int Heal(int health) => this.Health = Math.Min(this.Health += health, 30);
 
-        public bool CanPlayHand() => this.Mana >= this.Hand.Min().Value;
+        public bool CanPlayHand() => this.Hand.Count != 0 && this.Mana >= this.Hand.Min().Value;
 
         public int ReceiveManaSlot() => this.ManaSlots = Math.Min(this.ManaSlots + 1, 10);
 

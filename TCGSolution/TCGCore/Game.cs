@@ -11,11 +11,13 @@ namespace TCGCore
         public Player ActivePlayer { get; set; }
         public Player OpponentPlayer { get; set; }
         public Player Winner { get; set; }
+        public InputOutputBase InputOutputHelper { get; set; }
 
-        public Game(string name1, string name2)
+        public Game(string name1, string name2, InputOutputBase ioHelper)
         {
             AssignInitialPlayers(name1, name2);
             DealStartingHands();
+            this.InputOutputHelper = ioHelper;
         }
 
         private void AssignInitialPlayers(string name1, string name2)
@@ -51,7 +53,8 @@ namespace TCGCore
                 SwitchPlayers();
             }
 
-            Console.WriteLine($"Player { ActivePlayer }\nis the Winner!");
+            InputOutputHelper.WriteOutput("Game Over!");
+            InputOutputHelper.WriteOutput($"Player { ActivePlayer.Name }\nis the Winner!");
         }
 
         private bool SetWinner()
@@ -74,14 +77,14 @@ namespace TCGCore
         {
             while (ActivePlayer.CanPlayHand())
             {
-                Console.WriteLine($"Player:\n{ ActivePlayer }\nIt is your turn! Choose a card from your hand.");
-                Console.WriteLine("For healing you should enter H before the card number.");
+                InputOutputHelper.WriteOutput($"Player:\n{ ActivePlayer }\nIt is your turn! Choose a card from your hand.");
+                InputOutputHelper.WriteOutput("For healing you should enter H before the card number.");
 
-                var choice = Console.ReadLine();
+                var choice = InputOutputHelper.GetInput();
 
                 if (choice == null)
                 {
-                    Console.WriteLine("Please enter a choice.");
+                    InputOutputHelper.WriteOutput("Please enter a choice.");
                     continue;
                 }
 
@@ -89,19 +92,19 @@ namespace TCGCore
 
                 if (!int.TryParse(choiceWithoutH, out var selectedCard))
                 {
-                    Console.WriteLine($"The entry { choice } is not a valid choice.");
+                    InputOutputHelper.WriteOutput($"The entry { choice } is not a valid choice.");
                     continue;
                 }
 
                 if (!ActivePlayer.Hand.Contains(selectedCard))
                 {
-                    Console.WriteLine("Choice number is not present in hand.");
+                    InputOutputHelper.WriteOutput("Choice number is not present in hand.");
                     continue;
                 }
 
                 if (ActivePlayer.Mana < selectedCard)
                 {
-                    Console.WriteLine("Insufficient mana to play that hand.");
+                    InputOutputHelper.WriteOutput("Insufficient mana to play that hand.");
                     continue;
                 }
 
@@ -109,7 +112,7 @@ namespace TCGCore
                 
                 ActivePlayer.PlayCard(selectedCard, OpponentPlayer, isHealing);
 
-                Console.WriteLine();
+                InputOutputHelper.WriteOutput("\n");
             }
         }
 

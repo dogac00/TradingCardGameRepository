@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using TCGCore;
+﻿using TCGCore;
 using Xunit;
 
 namespace TCGTests
@@ -11,7 +8,7 @@ namespace TCGTests
         [Fact]
         public void ShouldHaveTwoPlayers()
         {
-            var game = new Game("Nuri", "Dogac");
+            var game = new Game("Nuri", "Dogac", null);
 
             Assert.NotNull(game.ActivePlayer);
             Assert.NotNull(game.OpponentPlayer);
@@ -20,7 +17,7 @@ namespace TCGTests
         [Fact]
         public void ShouldNotHaveWinnerAtStart()
         {
-            var game = new Game("Nuri", "Dogac");
+            var game = new Game("Nuri", "Dogac", null);
 
             Assert.Null(game.Winner);
         }
@@ -28,7 +25,7 @@ namespace TCGTests
         [Fact]
         public void ShouldHaveThreeCardsInHand()
         {
-            var game = new Game("Nuri", "Dogac");
+            var game = new Game("Nuri", "Dogac", null);
 
             Assert.Equal(3, game.ActivePlayer.Hand.Count);
             Assert.Equal(3, game.OpponentPlayer.Hand.Count);
