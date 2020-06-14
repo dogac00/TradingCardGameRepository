@@ -51,6 +51,18 @@ namespace TCGTests
         }
 
         [Fact]
+        public void ShouldCapAtThirty()
+        {
+            var player = new Player("Dogac");
+
+            player.Heal(1);
+            player.Heal(3);
+            player.Heal(6);
+
+            Assert.Equal(30, player.Health);
+        }
+
+        [Fact]
         public void ShouldReceiveOneDamageWhenNoCardInHand()
         {
             var player = new Player("Dogac");

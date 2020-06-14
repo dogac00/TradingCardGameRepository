@@ -14,6 +14,12 @@ namespace TCGCore
 
         public Game(string name1, string name2)
         {
+            AssignInitialPlayers(name1, name2);
+            DealStartingHands();
+        }
+
+        private void AssignInitialPlayers(string name1, string name2)
+        {
             var player1 = new Player(name1);
             var player2 = new Player(name2);
             var rnd = new Random().Next(2);
@@ -21,14 +27,17 @@ namespace TCGCore
             this.OpponentPlayer = this.ActivePlayer == player1 ? player2 : player1;
         }
 
-        public void Start()
+        private void DealStartingHands()
         {
             for (int i = 0; i < 3; i++)
             {
                 this.ActivePlayer.DrawCard();
                 this.OpponentPlayer.DrawCard();
             }
+        }
 
+        public void Start()
+        {
             while (this.Winner == null)
             {
                 this.ActivePlayer.ReceiveManaSlot();
