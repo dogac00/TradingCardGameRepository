@@ -50,6 +50,17 @@ namespace TCGCore
             }
         }
 
+        public void PlayCard(Card card, Player opponent, bool isHealing = false)
+        {
+            this.Hand.Remove(card);
+            this.DecreaseMana(card.Value);
+
+            if (isHealing)
+                this.Heal(card.Value);
+            else
+                opponent.TakeDamage(card.Value);
+        }
+
         private string GetHandString()
         {
             var sb = new StringBuilder();

@@ -97,13 +97,8 @@ namespace TCGCore
                 }
 
                 var isHealing = choice.Contains("H");
-                ActivePlayer.Hand.Remove(selectedCard);
-                ActivePlayer.DecreaseMana(selectedCard);
-
-                if (isHealing)
-                    ActivePlayer.Heal(selectedCard);
-                else
-                    OpponentPlayer.TakeDamage(selectedCard);
+                
+                ActivePlayer.PlayCard(selectedCard, OpponentPlayer, isHealing);
 
                 Console.WriteLine();
             }

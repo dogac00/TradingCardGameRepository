@@ -28,6 +28,11 @@ namespace TCGCore
             return this.Value;
         }
 
+        public override string ToString()
+        {
+            return this.Value.ToString();
+        }
+
         public int CompareTo(Card other)
         {
             if (ReferenceEquals(this, other)) return 0;
